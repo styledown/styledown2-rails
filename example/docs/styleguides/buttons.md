@@ -5,5 +5,5 @@
 I'm a button
 
 ```example.haml
-%a.btn Button
+%a.btn.btn-default.btn-large Button
 ```
