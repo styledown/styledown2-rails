@@ -58,6 +58,7 @@ If you prefer not to use the `styledown:install` generator, you can install Styl
   %a.btn.btn-default Click me
   ```
   ~~~
+
   </details>
 
 0. **Try it out** — you should now have <http://localhost:3000/styleguides>. Enjoy!
