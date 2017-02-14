@@ -39,7 +39,7 @@ class Styledown
         if ::Rails.env.development?
           instance.render
         else
-          instance.render_if_needed
+          instance.fast_render
         end
       end
 
