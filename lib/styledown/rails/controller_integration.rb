@@ -30,44 +30,48 @@ class Styledown
       end
 
       def options=(options)
-        @instance = nil
         @instance.options = options
       end
 
       # Reloads data, if needed.
       def reload
+        # TODO: styledown.no_reload = -> { !::Rails.env.development? }
         if ::Rails.env.development?
-          instance.render!
-        else
           instance.render
+        else
+          instance.render_if_needed
         end
       end
 
       def show(controller)
         @controller_instance = controller
 
-        # TODO: auto-redirect to trailing slash
-        reload
+        # If there's no trailing slash, add it
+        return if redirect_with_trailing_slash(controller)
 
+        # Find what to be rendered (eg, 'buttons')
         page = get_page(controller.params)
+
+        # Re-render (if needed), and get the final output
+        reload
         file = instance.output[page]
 
-        if file
-          controller.render body: file['contents'], content_type: file['type']
-        else
-          raise ActiveRecord::RecordNotFound
-        end
+        raise ActiveRecord::RecordNotFound unless file
+        controller.render body: file['contents'], content_type: file['type']
       end
 
+      # Appends to Styledown template `template` the contents from partial `partial`.
       def append_template(template, partial)
         use_template template, partial, append: true
       end
 
+      # Replaces Styledown template `template` with contents from partial `partial`.
       def use_template(template, partial, options = {})
         template_name = template.to_s # 'head'
 
         instance.add_data_filter do |data|
-          html = controller_instance.render_to_string partial: partial
+          html = controller_instance.render_to_string(
+            partial: partial, formats: [:html])
 
           if options[:append]
             data['templates'][template_name] ||= ''
@@ -77,6 +81,16 @@ class Styledown
           end
 
           data
+        end
+      end
+
+      # Allows the use of a given template engine.
+      def use_template_engine(engine)
+        instance.add_figure_filter engine do |contents|
+          html = controller_instance.render_to_string(
+            inline: contents, type: engine.to_sym)
+
+          ['html', html]
         end
       end
 
@@ -90,6 +104,19 @@ class Styledown
           page
         else
           'index'
+        end
+      end
+
+      # If there's no trailing slash, add it
+      def redirect_with_trailing_slash(controller)
+        # Don't use request.path, because that will always be missing a trailing slash.
+        path = controller.request.env['REQUEST_PATH']
+
+        # Check if there's no page and no trailing slash (eg, /styleguides and not
+        # /styleguides/ or /styleguides/foo)
+        if !controller.params[:page] && path[-1] != '/'
+          controller.redirect_to "#{path}/"
+          true
         end
       end
     end
