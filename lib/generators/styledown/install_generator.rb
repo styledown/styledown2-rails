@@ -8,7 +8,7 @@ class Styledown
 
       class_option :template_engine
 
-      SUPPORTED_ENGINES = [:erb, :haml]
+      SUPPORTED_ENGINES = [:erb, :haml, :slim]
 
       def install
         engine = options[:template_engine]
