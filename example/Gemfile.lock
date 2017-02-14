@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/styledown/styledown2-ruby.git
-  revision: a70d092a1aa06a88d81cb13cad67fe4c054125a0
+  revision: f09dc9e1576c1bd343d1e33a944742b6f57cd30f
   branch: master
   specs:
     styledown2 (2.0.0.pre5)
