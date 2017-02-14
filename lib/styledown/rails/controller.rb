@@ -4,6 +4,8 @@ class Styledown
       def self.included(klass)
         klass.extend ClassMethods
         klass.include InstanceMethods
+
+        # Initialize the ControllerIntegration instance
         klass.styledown
       end
 
@@ -16,6 +18,10 @@ class Styledown
       module InstanceMethods
         def styledown
           self.class.styledown
+        end
+
+        def show
+          styledown.show self
         end
       end
     end

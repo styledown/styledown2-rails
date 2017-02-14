@@ -3,9 +3,5 @@ class StyleguidesController < ApplicationController
 
   styledown.root = 'docs/styleguides'
   styledown.append_template :head, 'styleguides/head'
-  styledown.use_template_engine :haml
-
-  def show
-    styledown.show self
-  end
+  styledown.use_template_engine :erb, :haml
 end

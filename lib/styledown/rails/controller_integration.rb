@@ -85,12 +85,14 @@ class Styledown
       end
 
       # Allows the use of a given template engine.
-      def use_template_engine(engine)
-        instance.add_figure_filter engine do |contents|
-          html = controller_instance.render_to_string(
-            inline: contents, type: engine.to_sym)
+      def use_template_engine(*engines)
+        engines.each do |engine|
+          instance.add_figure_filter engine do |contents|
+            html = controller_instance.render_to_string(
+              inline: contents, type: engine.to_sym)
 
-          ['html', html]
+            ['html', html]
+          end
         end
       end
 
