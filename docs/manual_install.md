@@ -45,17 +45,17 @@ If you prefer not to use the `styledown:install` generator, you can install Styl
   <details>
   <summary>_docs/styleguides/index.md_</summary>
 
-			# Styleguides
+      # Styleguides
 
-			These are example styleguides.
+      These are example styleguides.
 
-			### buttons
-			These are buttons. And since we defined :haml in `use_template_engine`,
-			these haml examples will be rendered within Rails.
+      ### buttons
+      These are buttons. And since we defined :haml in `use_template_engine`,
+      these haml examples will be rendered within Rails.
 
-			```example.haml
-			%a.btn.btn-default Click me
-			```
+      ```example.haml
+      %a.btn.btn-default Click me
+      ```
 
   </details>
 
