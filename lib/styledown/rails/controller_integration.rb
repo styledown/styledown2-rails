@@ -56,7 +56,10 @@ class Styledown
         reload
         file = instance.output[page]
 
-        raise ActiveRecord::RecordNotFound unless file
+        unless file
+          raise ActionController::RoutingError,
+            "No file '#{page}' in styleguides"
+        end
         controller.render body: file['contents'], content_type: file['type']
       end
 

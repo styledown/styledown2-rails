@@ -28,6 +28,7 @@ class Styledown
         # Styleguides
         template 'index.md', 'docs/styleguides/index.md'
         template 'buttons.md', 'docs/styleguides/buttons.md'
+        template 'forms.md', 'docs/styleguides/forms.md'
         template 'README.md', 'docs/styleguides/README.md'
       end
     end
