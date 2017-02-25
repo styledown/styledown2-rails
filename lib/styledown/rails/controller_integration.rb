@@ -117,9 +117,12 @@ class Styledown
         # Don't use request.path, because that will always be missing a trailing slash.
         path = controller.request.env['REQUEST_PATH']
 
+        # Rack::Test doesn't seem to set REQUEST_PATH
+        path ||= controller.request.env['REQUEST_URI']
+
         # Check if there's no page and no trailing slash (eg, /styleguides and not
         # /styleguides/ or /styleguides/foo)
-        if !controller.params[:page] && path[-1] != '/'
+        if !controller.params[:page] && path && path[-1] != '/'
           controller.redirect_to "#{path}/"
           true
         end
